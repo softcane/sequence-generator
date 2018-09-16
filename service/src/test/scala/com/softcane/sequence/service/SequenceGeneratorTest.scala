@@ -3,12 +3,10 @@ package com.softcane.sequence.service
 import akka.actor.ActorSystem
 import com.outworkers.phantom.dsl._
 import com.softcane.sequence.dal.SequenceRepo
-import com.outworkers.phantom.connectors.{CassandraConnection, ContactPoint}
+import com.outworkers.phantom.connectors.ContactPoint
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Seconds, Span}
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.inject.Bindings._
 
 import scala.concurrent.Future
 
@@ -22,9 +20,6 @@ trait EmbeddedDatabase  {
 }
 
 class SequenceGeneratorTest extends FlatSpec with Suite with Matchers with ScalaFutures with BeforeAndAfterAll with EmbeddedDatabase {
-
-  implicit def newAppForTest(td: TestData) = new GuiceApplicationBuilder()
-    .bindings(bind(classOf[CassandraConnection]).toInstance(Connector.testConn)).build()
 
   implicit val defaultPatience = PatienceConfig(Span(120, Seconds), Span(1000, Millis))
 
